@@ -1,0 +1,32 @@
+#install service
+# Install Service
+try {
+    $serviceName = "NipInwardPostingServicetest"
+    $binPath = "C:\Octopus\Applications\Dev 172.27.27.210\NIPInwardPostingService\1.0.2-CI-20240521-105052\NipInwardPostingService.exe"
+
+    # Construct the command to create the service
+    $installCommand = "sc.exe create `"$serviceName`" binPath= `"$binPath`" start= auto"
+
+    # Execute the install command
+    Invoke-Expression -Command $installCommand
+}
+catch {
+    Write-Error "An error occurred while installing the service: $_"
+    exit 1
+}
+
+#uninstall service
+# Uninstall Service
+try {
+    $serviceName = "NipInwardPostingService"
+
+    # Construct the command to delete the service
+    $uninstallCommand = "sc.exe delete `"$serviceName`""
+
+    # Execute the uninstall command
+    Invoke-Expression -Command $uninstallCommand
+}
+catch {
+    Write-Error "An error occurred while uninstalling the service: $_"
+    exit 1
+}
